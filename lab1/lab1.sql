@@ -109,10 +109,10 @@ VALUES ('воин', 'обладатель оружия'),
        ('хранитель', 'обладатель артефакта');
 
 -- Заполнение таблицы objects (Объекты)
--- INSERT INTO objects (name, type, description, found_location_id)
--- VALUES ('Экран монитора', 'технология', 'Устройство для отображения изображений', 1),
---        ('Решетка', 'объект', 'Преграда на границе Диаспара', 1),
---        ('Ручка управления', 'технология', 'Инструмент для управления экраном', 1);
+INSERT INTO objects (name, type, description, found_location_id)
+VALUES ('Экран монитора', 'технология', 'Устройство для отображения изображений', 1),
+       ('Решетка', 'объект', 'Преграда на границе Диаспара', 1),
+       ('Ручка управления', 'технология', 'Инструмент для управления экраном', 1);
 
 -- Заполнение таблицы events (События)
 INSERT INTO events (name, location_id, description)
@@ -203,7 +203,7 @@ BEGIN
                            EXISTS(SELECT 1 FROM objects WHERE character_id = char_id AND type = 'оружие')     AS has_weapons,
                            EXISTS(SELECT 1 FROM objects WHERE character_id = char_id AND type = 'магия')      AS has_magic),
              -- Формируем список классификаций для добавления
-             to_insert AS (SELECT char_id AS character_id, c.id AS classification_id
+                to_insert AS (SELECT char_id AS character_id, c.id AS classification_id
                            FROM class_ids c, inventory_check i
                            WHERE (c.name = 'хранитель' AND i.has_artifacts)
                               OR (c.name = 'механик' AND i.has_technologies)
